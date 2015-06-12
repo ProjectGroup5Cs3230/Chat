@@ -1,3 +1,4 @@
+
 package chat;
 
 import java.awt.Dimension;
@@ -13,8 +14,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.text.JTextComponent;
 
-public class ChatFrame extends JFrame {
-	private static final long serialVersionUID = -787546267482940465L;
+public class ChatFrame extends JFrame{
+    
+    private static final long serialVersionUID = -787546267482940465L;
 	private JScrollPane outputScrollPane;
 	private JScrollPane inputScrollPane;
 	private JTextArea chatOutput;
@@ -89,3 +91,6 @@ public class ChatFrame extends JFrame {
 		moveCursorToEnd(chatInput);
 	}
 }
+    
+    
+

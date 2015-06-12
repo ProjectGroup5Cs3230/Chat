@@ -1,4 +1,4 @@
-package chat_client;
+package chat;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -32,11 +32,5 @@ public class ConnectionServer implements Runnable {
 		}
 	}
 	
-	public static void main(String[] args) throws IOException {
-		Runnable server = new ConnectionServer();
-		Thread thread = new Thread(server);
-		thread.start();
-		
-		System.out.println("DONE");
-	}
+	
 }
