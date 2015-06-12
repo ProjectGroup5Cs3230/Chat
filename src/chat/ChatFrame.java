@@ -6,6 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -27,7 +31,10 @@ public class ChatFrame extends JFrame{
 		textComponent.setCaretPosition(textComponent.getDocument().getLength());
 	}
 	
-	private void submitInput() {
+	private void submitInput() throws UnknownHostException {
+                InetAddress IP=InetAddress.getLocalHost();
+                String user = IP.toString();
+                chatOutput.append(user + ":");
 		chatOutput.append(chatInput.getText() + "\n");
 		moveCursorToEnd(chatOutput);
 		chatInput.setText("");
@@ -54,7 +61,11 @@ public class ChatFrame extends JFrame{
 			public void keyPressed(KeyEvent event) {
 				if(event.getKeyCode() == KeyEvent.VK_ENTER && event.getModifiers() == KeyEvent.CTRL_MASK)
 				{
-					submitInput();
+                                    try {
+                                        submitInput();
+                                    } catch (UnknownHostException ex) {
+                                        Logger.getLogger(ChatFrame.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
 				}
 				if(event.getKeyCode() == KeyEvent.VK_ENTER)
 				{
@@ -70,7 +81,11 @@ public class ChatFrame extends JFrame{
 		sendButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				submitInput();
+                            try {
+                                submitInput();
+                            } catch (UnknownHostException ex) {
+                                Logger.getLogger(ChatFrame.class.getName()).log(Level.SEVERE, null, ex);
+                            }
 			}
 		});
 		
@@ -82,6 +97,7 @@ public class ChatFrame extends JFrame{
 		setVisible(true);
 		
 		chatInput.requestFocus();
+                
 	}
 	
 	public void output(String output) {
@@ -90,6 +106,7 @@ public class ChatFrame extends JFrame{
 		chatInput.requestFocus();
 		moveCursorToEnd(chatInput);
 	}
+        
 }
     
     
