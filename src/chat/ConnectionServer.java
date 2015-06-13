@@ -1,9 +1,11 @@
 package chat;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Scanner;
+//import java.util.Scanner;
 
 public class ConnectionServer implements Runnable {
 	
@@ -12,11 +14,12 @@ public class ConnectionServer implements Runnable {
 		try {
 			ServerSocket server = new ServerSocket(8989);
 			Socket clientConnection = server.accept();
-
-			Scanner input = new Scanner(clientConnection.getInputStream());
-			String chatMessage;
+                        
+			BufferedReader input = new BufferedReader (new InputStreamReader(clientConnection.getInputStream()));
+			//String chatMessage;
 			while (clientConnection.isConnected() && !clientConnection.isClosed()) {
-				chatMessage = input.next();
+                                
+				String chatMessage = input.readLine();
 				System.out.println(chatMessage);
 
 				if (chatMessage.equals("exit")) {
