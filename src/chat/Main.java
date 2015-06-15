@@ -9,11 +9,14 @@ public class Main {
     public static void main(String[] args) 
 	{
 		
-		//ChatFrame chat = new ChatFrame();
-                ConnectionServer server = new ConnectionServer();
-                Client connect = new Client();
-                server.run();
-                connect.run();
+            ChatFrame chat = new ChatFrame();
+            final ConnectionServer server = new ConnectionServer();
+            Runtime.getRuntime().addShutdownHook(new Thread(){public void run(){
+                    
+                }});
+            Thread listener = new Thread(server);
+            listener.start();
+               
 		
 	}
 

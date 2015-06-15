@@ -26,17 +26,16 @@ public class ChatFrame extends JFrame{
 	private JTextArea chatOutput;
 	private JTextArea chatInput;
 	private JButton sendButton;
-	
+	private String user;
+        
 	private void moveCursorToEnd(JTextComponent textComponent) {
 		textComponent.setCaretPosition(textComponent.getDocument().getLength());
 	}
 	
-	private void submitInput() throws UnknownHostException {
-                InetAddress IP=InetAddress.getLocalHost();
-                String user = IP.toString();
-                chatOutput.append(user + ":");
+	private void submitInput() {
+                
 		chatOutput.append(chatInput.getText() + "\n");
-		moveCursorToEnd(chatOutput);
+                moveCursorToEnd(chatOutput);
 		chatInput.setText("");
 		chatInput.requestFocus();
 	}
@@ -61,11 +60,9 @@ public class ChatFrame extends JFrame{
 			public void keyPressed(KeyEvent event) {
 				if(event.getKeyCode() == KeyEvent.VK_ENTER && event.getModifiers() == KeyEvent.CTRL_MASK)
 				{
-                                    try {
-                                        submitInput();
-                                    } catch (UnknownHostException ex) {
-                                        Logger.getLogger(ChatFrame.class.getName()).log(Level.SEVERE, null, ex);
-                                    }
+                                    
+                                       
+                                 
 				}
 				if(event.getKeyCode() == KeyEvent.VK_ENTER)
 				{
@@ -80,12 +77,11 @@ public class ChatFrame extends JFrame{
 		sendButton = new JButton("Send");
 		sendButton.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent event) {
-                            try {
-                                submitInput();
-                            } catch (UnknownHostException ex) {
-                                Logger.getLogger(ChatFrame.class.getName()).log(Level.SEVERE, null, ex);
-                            }
+			public void actionPerformed(ActionEvent event)
+                        {
+                            
+                            
+                         
 			}
 		});
 		
@@ -100,12 +96,24 @@ public class ChatFrame extends JFrame{
                 
 	}
 	
-	public void output(String output) {
+	public void output(String output) 
+        {
 		chatOutput.append(output + "\n");
 		moveCursorToEnd(chatOutput);
 		chatInput.requestFocus();
 		moveCursorToEnd(chatInput);
 	}
+        
+     public void ServerText(String servertext) throws UnknownHostException
+    {
+        InetAddress IP=InetAddress.getLocalHost();
+        this.user = IP.toString();
+        this.chatOutput.append(user + ": " + servertext + "\n\n");
+        this.chatOutput.updateUI();
+    }
+     public void connected(){
+         this.chatOutput.append("connected" + "\n");
+     }
         
 }
     

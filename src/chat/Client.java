@@ -2,7 +2,7 @@
 package chat;
 
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
+import java.io.*;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
@@ -12,21 +12,23 @@ import java.net.Socket;
 
 public class Client implements Runnable
 {
-    DataOutputStream os;
-   
+    protected Socket sock;
+    protected BufferedReader ed;
+    protected InputStreamReader read;
+    protected String temp;  
         @Override
         public void run()
         {
              
             try 
             {
-                Socket sock = new Socket("localhost", 8989);
+                this.sock = new Socket("localhost", 8989);
                 PrintStream pr = new PrintStream(sock.getOutputStream());
                 
-                InputStreamReader read = new InputStreamReader(System.in);
-                BufferedReader ed = new BufferedReader(read);
+                this.read = new InputStreamReader(System.in);
+                this.ed = new BufferedReader(read);
                
-                String temp = ed.readLine();
+                this.temp = ed.readLine();
                 pr.println(temp);
             }
             catch ( IOException e) 
