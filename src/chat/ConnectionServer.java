@@ -1,3 +1,4 @@
+
 package chat;
 
 import java.io.BufferedReader;
@@ -7,12 +8,18 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 
-public class ConnectionServer implements Runnable 
+public class ConnectionServer implements Runnable
 {
-    protected ChatFrame frame;
+    
     protected BufferedReader input;
     protected ServerSocket server;
     
+    
+    public ConnectionServer()
+    {
+    
+    
+    }
     @Override
     public void run()
     {
@@ -28,27 +35,23 @@ public class ConnectionServer implements Runnable
                 {
                     try
                     {
-                        frame.connected();
+                        
                         String chatMessage = input.readLine();
-                        System.out.println(chatMessage);
+                        
 
                         if (chatMessage.equals("exit")) 
                         {
                             clientConnection.close();
                             break;
                         }
-                        if(!chatMessage.equals(null))
-                        {
-                            frame.ServerText(chatMessage); 
-                        }
+                        
                     }
                             
                     catch (NullPointerException e)
                     {
                                     
                     }
-                    server.close();
-                    input.close();	
+                    	
                 }
             }
                 
@@ -58,14 +61,14 @@ public class ConnectionServer implements Runnable
             e.printStackTrace();
         }
     }
-    public void endConnection()
+     public void endConnection()
     {
         try
         {
-            server.close();
-            input.close();
-        }
-        catch(Exception e)
+            this.input.close();
+            this.server.close();
+            
+        }catch(Exception e)
         {
 
         }
