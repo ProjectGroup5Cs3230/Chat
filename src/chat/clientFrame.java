@@ -22,10 +22,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.text.JTextComponent;
 
-public class ChatFrame extends JFrame 
+public class clientFrame extends JFrame
 {
-     private static final long serialVersionUID = -787546267482940465L;
-     
     private JScrollPane outputScrollPane;
     private JScrollPane inputScrollPane;
     private JTextArea chatOutput;
@@ -34,13 +32,10 @@ public class ChatFrame extends JFrame
     private JButton connectButton;
     private String user;
     private String outMessage;
-    private ConnectionServer connectChat;
-        
-        
-			
-    public ChatFrame()
-    {
-        
+    private ConnectionClient connectChat;
+
+    public clientFrame()
+    {        
         Runtime.getRuntime().addShutdownHook(new Thread(){public void run(){
         try
         {
@@ -95,25 +90,24 @@ public class ChatFrame extends JFrame
             
             
             outMessage = chatInput.getText();
-            chatOutput.append("server: " + outMessage);
+            chatOutput.append("Client: " + outMessage);
             chatInput.setText("");
-            
             /*
             try {
                 connectChat.messageToServer(outMessage);
             } catch (IOException ex) {
                 Logger.getLogger(ChatFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
-             */                
+                 */            
         }
         });
-        connectButton = new JButton("ServerConnect");
+        connectButton = new JButton("ClientConnect");
         connectButton.addActionListener(new ActionListener() {
 
          @Override
          public void actionPerformed(ActionEvent e)
          {
-             chatOutput.append("start localhost \n");
+             chatOutput.append("connected to localhost \n");
              startChat();
          }
         });
@@ -126,29 +120,21 @@ public class ChatFrame extends JFrame
         setVisible(true);
 
         chatInput.requestFocus();
-                
-    }
-	
-	
-     
+    } 
+    
     private void startChat()
     {
         
-        try {
-            connectChat = new ConnectionServer();
+        try 
+        {
+            connectChat = new ConnectionClient();
             Thread startup = new Thread(connectChat);
             startup.start();
-            
-            
-            
-        } catch (Exception e) {
+             
+        } 
+        catch (Exception e) 
+        {
             e.printStackTrace();
         }
     } 
-    
-    private void moveCursorToEnd(JTextComponent textComponent) 
-    {
-	textComponent.setCaretPosition(textComponent.getDocument().getLength());
-    }
-    
 }

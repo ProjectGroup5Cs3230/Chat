@@ -8,6 +8,7 @@ public class Main {
 	{
 		
             ChatFrame chat = new ChatFrame();
+            clientFrame client = new clientFrame();
           	
 	}
 

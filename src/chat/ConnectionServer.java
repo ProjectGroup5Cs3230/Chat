@@ -2,8 +2,10 @@
 package chat;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -13,12 +15,13 @@ public class ConnectionServer implements Runnable
     
     protected BufferedReader input;
     protected ServerSocket server;
-    
+    protected BufferedWriter serverMessage;
+    protected Socket clientConnection;
     
     public ConnectionServer()
     {
     
-    
+        //server contruct
     }
     @Override
     public void run()
@@ -73,4 +76,20 @@ public class ConnectionServer implements Runnable
 
         }
     }
+    public void messageToServer(String message) throws IOException
+    {
+        try
+        {
+            serverMessage = new BufferedWriter(new OutputStreamWriter(clientConnection.getOutputStream()));
+            serverMessage.write(message);
+            serverMessage.flush();
+            
+        }
+        catch(IOException e)
+        {
+            throw e;
+        }
+
+    }
+
 }
