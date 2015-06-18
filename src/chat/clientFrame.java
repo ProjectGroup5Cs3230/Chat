@@ -1,4 +1,3 @@
-
 package chat;
 
 import java.awt.Dimension;
@@ -44,11 +43,10 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.text.JTextComponent;
-i
+
 
 public class clientFrame extends JFrame
 {
-    protected JFrame cFrame;
     private JScrollPane outputScrollPane;
     private JScrollPane inputScrollPane;
     private JTextArea chatOutput;
@@ -61,7 +59,7 @@ public class clientFrame extends JFrame
     public ConnectionServer chat;
 
     public clientFrame()
-    {        
+    {
         Runtime.getRuntime().addShutdownHook(new Thread(){public void run(){
         try
         {
@@ -72,7 +70,7 @@ public class clientFrame extends JFrame
 
         }
         }});
-        
+
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(new Dimension(350, 450));
 
@@ -89,8 +87,8 @@ public class clientFrame extends JFrame
         chatInput = new JTextArea();
         inputScrollPane = new JScrollPane(chatInput);
         inputScrollPane.setPreferredSize(new Dimension(300, 50));
-                
-                
+
+
         chatInput.addKeyListener(new KeyAdapter() {
         @Override
         public void keyPressed(KeyEvent event) {
@@ -106,22 +104,22 @@ public class clientFrame extends JFrame
             }
         }
         });
-		
-		
-		
+
         sendButton = new JButton("Send");
         sendButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent event)
         {
             outMessage = "server:" + (chatInput.getText());
-            
+
             try {
                 connectChat.messageToServer(outMessage);//send string to method in clientconnect that writes to outstream
             } catch (IOException ex) {
                 Logger.getLogger(clientFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
-          
+
+            addTextToWindow(outMessage);
+
            chatInput.setText("");
         }
         });
@@ -131,7 +129,7 @@ public class clientFrame extends JFrame
          @Override
          public void actionPerformed(ActionEvent e)
          {
-             
+
              startChat();
          }
         });
@@ -140,32 +138,31 @@ public class clientFrame extends JFrame
         panel.add(sendButton);
         panel.add(connectButton);
         add(panel);
-		
+
         setVisible(true);
 
         chatInput.requestFocus();
-    } 
-    
+    }
+
     private void startChat()
     {
-        
-        try 
+
+        try
         {
-            connectChat = new ConnectionClient();
+            connectChat = new ConnectionClient(this);
             Thread startup = new Thread(connectChat);
             startup.start();
             chatOutput.append("connected to localhost\n");
-             
-        } 
-        catch (Exception e) 
+
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
         }
-    } 
+    }
     public void addTextToWindow(String text)
     {
         chatOutput.append(text + "\n");
-        
+
     }
 }
-

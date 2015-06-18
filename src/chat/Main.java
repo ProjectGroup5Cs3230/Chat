@@ -1,15 +1,9 @@
-
 package chat;
 
-
 public class Main {
-
-    public static void main(String[] args) 
-	{
-		
-            ChatFrame chat = new ChatFrame();
-            clientFrame client = new clientFrame();
-          	
-	}
-
+    public static void main(String[] args)
+    {
+        ChatFrame chat = new ChatFrame();
+        clientFrame client = new clientFrame
+    }
 }

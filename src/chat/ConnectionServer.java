@@ -1,4 +1,3 @@
-
 package chat;
 
 import java.io.BufferedReader;
@@ -12,52 +11,51 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 
-
 public class ConnectionServer implements Runnable
 {
-    
-   // public BufferedReader input;
     public ServerSocket server;
     public BufferedWriter serverMessage;
     public DataOutputStream output;
     public DataInputStream input;
     public ChatFrame sFrame;
-    
-    public ConnectionServer()
+
+    public ConnectionServer(ChatFrame serverFrame)
     {
-        
+
         //server contruct
+    	sFrame = serverFrame;
     }
     @Override
     public void run()
     {
-        try 
+        try
         {
             server = new ServerSocket(8989);
-            
+
             while(true)
-            {    
+            {
                 Socket clientConnection = server.accept();
 
                 //input = new BufferedReader (new InputStreamReader(clientConnection.getInputStream()));
                 //serverMessage = new BufferedWriter(new OutputStreamWriter(clientConnection.getOutputStream()));
                 this.input = new DataInputStream(clientConnection.getInputStream());
-                this.output = new DataOutputStream(clientConnection.getOutputStream()); 
+                this.output = new DataOutputStream(clientConnection.getOutputStream());
 
-                while (clientConnection.isConnected() && !clientConnection.isClosed()) 
+                while (clientConnection.isConnected() && !clientConnection.isClosed())
                 {
                     try
                     {
 
                         String chatMessage = input.readUTF(); //read incoming message from client outUTF
+                        //System.out.println("ConnectionServer");
+                        //System.out.println(chatMessage);
 
-
-                        if (chatMessage.equals("exit")) 
+                        if (chatMessage.equals("exit"))
                         {
                             clientConnection.close();
                             break;
                         }
-                        else 
+                        else
                         {
                             sFrame.addTextToWindow(chatMessage);//send to method in server frame to append to output
 
@@ -72,9 +70,9 @@ public class ConnectionServer implements Runnable
 
                 }
             }
-                
-        }	
-        catch (IOException e) 
+
+        }
+        catch (IOException e)
         {
             e.printStackTrace();
         }
@@ -85,7 +83,7 @@ public class ConnectionServer implements Runnable
         {
             input.close();
             server.close();
-            
+
         }catch(Exception e)
         {
 
@@ -95,9 +93,10 @@ public class ConnectionServer implements Runnable
     {
         try
         {
-         
+
             output.writeUTF(message);//send message out to client
-            
+            output.flush();
+
         }
         catch(IOException e)
         {
