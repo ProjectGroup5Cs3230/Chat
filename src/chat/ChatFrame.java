@@ -5,17 +5,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JPanel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JScrollPane;
@@ -32,7 +26,7 @@ public class ChatFrame extends JFrame
     private JTextArea chatInput;
     private JButton sendButton;
     private JButton connectButton;
-    private String user;
+    //private String user;
     private String outMessage = "";
     public ConnectionServer connectChat;
 
@@ -141,7 +135,8 @@ public class ChatFrame extends JFrame
     {
         textComponent.setCaretPosition(textComponent.getDocument().getLength());
     }
-     public void addTextToWindow(String text)
+    
+    public void addTextToWindow(String text)
     {
         chatOutput.append(text + "\n");
 

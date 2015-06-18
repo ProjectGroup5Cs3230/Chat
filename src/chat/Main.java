@@ -3,7 +3,9 @@ package chat;
 public class Main {
     public static void main(String[] args)
     {
-        ChatFrame chat = new ChatFrame();
-        ClientFrame client = new ClientFrame();
+        @SuppressWarnings("unused")
+		ChatFrame chat = new ChatFrame();
+        @SuppressWarnings("unused")
+		ClientFrame client = new ClientFrame();
     }
 }
