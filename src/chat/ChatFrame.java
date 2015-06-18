@@ -16,16 +16,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JPanel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.text.JTextComponent;
 
-public class ChatFrame extends JFrame 
+
+public class ChatFrame extends JFrame
 {
-     private static final long serialVersionUID = -787546267482940465L;
-     
+    private static final long serialVersionUID = -787546267482940465L;
+    protected JFrame sFrame;
     private JScrollPane outputScrollPane;
     private JScrollPane inputScrollPane;
     private JTextArea chatOutput;
@@ -33,14 +35,13 @@ public class ChatFrame extends JFrame
     private JButton sendButton;
     private JButton connectButton;
     private String user;
-    private String outMessage;
-    private ConnectionServer connectChat;
+    private String outMessage = "";
+    public ConnectionServer connectChat;
         
         
 			
     public ChatFrame()
     {
-        
         Runtime.getRuntime().addShutdownHook(new Thread(){public void run(){
         try
         {
@@ -51,6 +52,7 @@ public class ChatFrame extends JFrame
 
         }
         }});
+       
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(new Dimension(350, 450));
 
@@ -93,18 +95,15 @@ public class ChatFrame extends JFrame
         public void actionPerformed(ActionEvent event)
         {
             
-            
-            outMessage = chatInput.getText();
-            chatOutput.append("server: " + outMessage);
-            chatInput.setText("");
-            
-            /*
             try {
-                connectChat.messageToServer(outMessage);
+                outMessage = "server:" + (chatInput.getText());
+                
+                connectChat.messageToClient(outMessage);//send to server method to write to outstream
+                
             } catch (IOException ex) {
                 Logger.getLogger(ChatFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
-             */                
+            chatInput.setText("");                 
         }
         });
         connectButton = new JButton("ServerConnect");
@@ -113,8 +112,8 @@ public class ChatFrame extends JFrame
          @Override
          public void actionPerformed(ActionEvent e)
          {
-             chatOutput.append("start localhost \n");
-             startChat();
+             
+             startChat();//start thread
          }
         });
         panel.add(outputScrollPane);
@@ -138,6 +137,7 @@ public class ChatFrame extends JFrame
             connectChat = new ConnectionServer();
             Thread startup = new Thread(connectChat);
             startup.start();
+            chatOutput.append("starting localhost\n");
             
             
             
@@ -150,5 +150,11 @@ public class ChatFrame extends JFrame
     {
 	textComponent.setCaretPosition(textComponent.getDocument().getLength());
     }
+     public void addTextToWindow(String text)
+    {
+        chatOutput.append(text + "\n");
+        
+    }
     
 }
+

@@ -16,14 +16,39 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JPanel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.text.JTextComponent;
 
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import static javax.swing.JFrame.EXIT_ON_CLOSE;
+import javax.swing.JPanel;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.text.JTextComponent;
+i
+
 public class clientFrame extends JFrame
 {
+    protected JFrame cFrame;
     private JScrollPane outputScrollPane;
     private JScrollPane inputScrollPane;
     private JTextArea chatOutput;
@@ -31,8 +56,9 @@ public class clientFrame extends JFrame
     private JButton sendButton;
     private JButton connectButton;
     private String user;
-    private String outMessage;
-    private ConnectionClient connectChat;
+    private String outMessage = "";
+    public ConnectionClient connectChat;
+    public ConnectionServer chat;
 
     public clientFrame()
     {        
@@ -46,6 +72,7 @@ public class clientFrame extends JFrame
 
         }
         }});
+        
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(new Dimension(350, 450));
 
@@ -87,18 +114,15 @@ public class clientFrame extends JFrame
         @Override
         public void actionPerformed(ActionEvent event)
         {
+            outMessage = "server:" + (chatInput.getText());
             
-            
-            outMessage = chatInput.getText();
-            chatOutput.append("Client: " + outMessage);
-            chatInput.setText("");
-            /*
             try {
-                connectChat.messageToServer(outMessage);
+                connectChat.messageToServer(outMessage);//send string to method in clientconnect that writes to outstream
             } catch (IOException ex) {
-                Logger.getLogger(ChatFrame.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(clientFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
-                 */            
+          
+           chatInput.setText("");
         }
         });
         connectButton = new JButton("ClientConnect");
@@ -107,7 +131,7 @@ public class clientFrame extends JFrame
          @Override
          public void actionPerformed(ActionEvent e)
          {
-             chatOutput.append("connected to localhost \n");
+             
              startChat();
          }
         });
@@ -130,6 +154,7 @@ public class clientFrame extends JFrame
             connectChat = new ConnectionClient();
             Thread startup = new Thread(connectChat);
             startup.start();
+            chatOutput.append("connected to localhost\n");
              
         } 
         catch (Exception e) 
@@ -137,4 +162,10 @@ public class clientFrame extends JFrame
             e.printStackTrace();
         }
     } 
+    public void addTextToWindow(String text)
+    {
+        chatOutput.append(text + "\n");
+        
+    }
 }
+
