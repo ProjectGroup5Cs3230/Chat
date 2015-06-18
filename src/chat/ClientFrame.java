@@ -20,8 +20,8 @@ import javax.swing.text.JTextComponent;
 
 public class ClientFrame extends JFrame
 {
-	private static final long serialVersionUID = 574163885414434105L;
-	private JScrollPane outputScrollPane;
+    private static final long serialVersionUID = 574163885414434105L;
+    private JScrollPane outputScrollPane;
     private JScrollPane inputScrollPane;
     private JTextArea chatOutput;
     private JTextArea chatInput;
@@ -31,6 +31,12 @@ public class ClientFrame extends JFrame
     private String outMessage = "";
     public ConnectionClient connectChat;
     public ConnectionServer chat;
+
+    private void moveCursorToEnd(JTextComponent textComponent)
+    {
+        textComponent.setCaretPosition(textComponent.getDocument().getLength());
+    }
+
 
     private void sendMessage() {
         outMessage = "client:" + (chatInput.getText());
@@ -46,6 +52,22 @@ public class ClientFrame extends JFrame
         chatInput.setText("");
     }
 
+    private void startChat()
+    {
+
+        try
+        {
+            connectChat = new ConnectionClient(this);
+            Thread startup = new Thread(connectChat);
+            startup.start();
+            chatOutput.append("connected to localhost\n");
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
 
     public ClientFrame()
     {
@@ -119,28 +141,6 @@ public class ClientFrame extends JFrame
         setVisible(true);
 
         chatInput.requestFocus();
-    }
-
-    private void startChat()
-    {
-
-        try
-        {
-            connectChat = new ConnectionClient(this);
-            Thread startup = new Thread(connectChat);
-            startup.start();
-            chatOutput.append("connected to localhost\n");
-
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
-
-    private void moveCursorToEnd(JTextComponent textComponent)
-    {
-        textComponent.setCaretPosition(textComponent.getDocument().getLength());
     }
 
     public void addTextToWindow(String text)

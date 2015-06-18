@@ -30,6 +30,11 @@ public class ChatFrame extends JFrame
     private String outMessage = "";
     public ConnectionServer connectChat;
 
+    private void moveCursorToEnd(JTextComponent textComponent)
+    {
+        textComponent.setCaretPosition(textComponent.getDocument().getLength());
+    }
+
     private void sendMessage() {
         outMessage = "server:" + (chatInput.getText());
 
@@ -44,6 +49,22 @@ public class ChatFrame extends JFrame
 
         addTextToWindow(outMessage);
         chatInput.setText("");
+    }
+
+    private void startChat()
+    {
+
+        try {
+            connectChat = new ConnectionServer(this);
+            Thread startup = new Thread(connectChat);
+            startup.start();
+            chatOutput.append("starting localhost\n");
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public ChatFrame()
@@ -117,28 +138,6 @@ public class ChatFrame extends JFrame
         setVisible(true);
 
         chatInput.requestFocus();
-
-    }
-
-    private void startChat()
-    {
-
-        try {
-            connectChat = new ConnectionServer(this);
-            Thread startup = new Thread(connectChat);
-            startup.start();
-            chatOutput.append("starting localhost\n");
-
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void moveCursorToEnd(JTextComponent textComponent)
-    {
-        textComponent.setCaretPosition(textComponent.getDocument().getLength());
     }
 
     public void addTextToWindow(String text)
@@ -148,6 +147,4 @@ public class ChatFrame extends JFrame
         chatInput.setText("");
         chatInput.requestFocus();
     }
-
 }
-
