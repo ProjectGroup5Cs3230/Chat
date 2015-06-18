@@ -135,11 +135,13 @@ public class ChatFrame extends JFrame
     {
         textComponent.setCaretPosition(textComponent.getDocument().getLength());
     }
-    
+
     public void addTextToWindow(String text)
     {
         chatOutput.append(text + "\n");
-
+        moveCursorToEnd(chatOutput);
+        chatInput.setText("");
+        chatInput.requestFocus();
     }
 
 }

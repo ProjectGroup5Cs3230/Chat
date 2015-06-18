@@ -8,12 +8,14 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.text.JTextComponent;
 
 
 public class ClientFrame extends JFrame
@@ -82,7 +84,7 @@ public class ClientFrame extends JFrame
         @Override
         public void actionPerformed(ActionEvent event)
         {
-            outMessage = "server:" + (chatInput.getText());
+            outMessage = "client:" + (chatInput.getText());
 
             try {
                 connectChat.messageToServer(outMessage);//send string to method in clientconnect that writes to outstream
@@ -132,9 +134,17 @@ public class ClientFrame extends JFrame
             e.printStackTrace();
         }
     }
+
+    private void moveCursorToEnd(JTextComponent textComponent)
+    {
+        textComponent.setCaretPosition(textComponent.getDocument().getLength());
+    }
+
     public void addTextToWindow(String text)
     {
         chatOutput.append(text + "\n");
-
+        moveCursorToEnd(chatOutput);
+        chatInput.setText("");
+        chatInput.requestFocus();
     }
 }
