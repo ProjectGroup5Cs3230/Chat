@@ -47,11 +47,11 @@ public class ConnectionClient implements Runnable
                     String incomingMessage = input.readUTF();//read message from server
                     //System.out.println("ConnectionClient");
                     //System.out.println(incomingMessage);
-					String[] parts = incomingMessage.split(":");
+                    String[] parts = incomingMessage.split(":");
                     
                     if (parts[1].equals("exit"))
                     {
-						endConnection();
+			endConnection();
                         serverConnection.close();
                         break;
                     }

@@ -45,11 +45,11 @@ public class ConnectionServer implements Runnable
                         String chatMessage = input.readUTF(); //read incoming message from client outUTF
                         //System.out.println("ConnectionServer");
                         //System.out.println(chatMessage);
-						String[] parts = chatMessage.split(":");
+                        String[] parts = chatMessage.split(":");
 						
                         if (parts[1].equals("exit"))
                         {
-							endConnection();
+                            endConnection();
                             clientConnection.close();
                             break;
                         }
