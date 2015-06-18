@@ -68,7 +68,17 @@ public class ClientFrame extends JFrame
         public void keyPressed(KeyEvent event) {
             if(event.getKeyCode() == KeyEvent.VK_ENTER && event.getModifiers() == KeyEvent.CTRL_MASK)
             {
+				outMessage = "client:" + (chatInput.getText());
 
+            try {
+                connectChat.messageToServer(outMessage);//send string to method in clientconnect that writes to outstream
+            } catch (IOException ex) {
+                Logger.getLogger(ClientFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            addTextToWindow(outMessage);
+
+           chatInput.setText("");
 
 
             }
