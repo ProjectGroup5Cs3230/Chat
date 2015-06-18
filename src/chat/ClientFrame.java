@@ -32,6 +32,21 @@ public class ClientFrame extends JFrame
     public ConnectionClient connectChat;
     public ConnectionServer chat;
 
+    private void sendMessage() {
+        outMessage = "client:" + (chatInput.getText());
+
+        try {
+            connectChat.messageToServer(outMessage);//send string to method in clientconnect that writes to outstream
+        } catch (IOException ex) {
+            Logger.getLogger(ClientFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        addTextToWindow(outMessage);
+
+        chatInput.setText("");
+    }
+
+
     public ClientFrame()
     {
         Runtime.getRuntime().addShutdownHook(new Thread(){public void run(){
@@ -68,19 +83,7 @@ public class ClientFrame extends JFrame
         public void keyPressed(KeyEvent event) {
             if(event.getKeyCode() == KeyEvent.VK_ENTER && event.getModifiers() == KeyEvent.CTRL_MASK)
             {
-				outMessage = "client:" + (chatInput.getText());
-
-            try {
-                connectChat.messageToServer(outMessage);//send string to method in clientconnect that writes to outstream
-            } catch (IOException ex) {
-                Logger.getLogger(ClientFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            addTextToWindow(outMessage);
-
-           chatInput.setText("");
-
-
+                sendMessage();
             }
             if(event.getKeyCode() == KeyEvent.VK_ENTER)
             {
@@ -94,17 +97,7 @@ public class ClientFrame extends JFrame
         @Override
         public void actionPerformed(ActionEvent event)
         {
-            outMessage = "client:" + (chatInput.getText());
-
-            try {
-                connectChat.messageToServer(outMessage);//send string to method in clientconnect that writes to outstream
-            } catch (IOException ex) {
-                Logger.getLogger(ClientFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            addTextToWindow(outMessage);
-
-           chatInput.setText("");
+            sendMessage();
         }
         });
         connectButton = new JButton("ClientConnect");

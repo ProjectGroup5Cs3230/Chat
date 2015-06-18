@@ -30,6 +30,22 @@ public class ChatFrame extends JFrame
     private String outMessage = "";
     public ConnectionServer connectChat;
 
+    private void sendMessage() {
+        outMessage = "server:" + (chatInput.getText());
+
+        try {
+
+            connectChat.messageToClient(outMessage);//send to server method to write to outstream
+
+
+        } catch (IOException ex) {
+            Logger.getLogger(ChatFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        addTextToWindow(outMessage);
+        chatInput.setText("");
+    }
+
     public ChatFrame()
     {
         Runtime.getRuntime().addShutdownHook(new Thread(){public void run(){
@@ -66,21 +82,7 @@ public class ChatFrame extends JFrame
         public void keyPressed(KeyEvent event) {
             if(event.getKeyCode() == KeyEvent.VK_ENTER && event.getModifiers() == KeyEvent.CTRL_MASK)
             {
-				outMessage = "server:" + (chatInput.getText());
-                
-                try 
-                {
-                
-                connectChat.messageToClient(outMessage);//send to server method to write to outstream
-                
-                } 
-                catch (IOException ex) 
-                {
-                    Logger.getLogger(ChatFrame.class.getName()).log(Level.SEVERE, null, ex);
-                }
-				
-                addTextToWindow(outMessage);
-                chatInput.setText(""); 
+                sendMessage();
             }
             if(event.getKeyCode() == KeyEvent.VK_ENTER)
             {
@@ -93,19 +95,7 @@ public class ChatFrame extends JFrame
         @Override
         public void actionPerformed(ActionEvent event)
         {
-            outMessage = "server:" + (chatInput.getText());
-
-            try {
-
-                connectChat.messageToClient(outMessage);//send to server method to write to outstream
-
-
-            } catch (IOException ex) {
-                Logger.getLogger(ChatFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            addTextToWindow(outMessage);
-            chatInput.setText("");
+            sendMessage();
         }
         });
         connectButton = new JButton("ServerConnect");
