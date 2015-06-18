@@ -45,7 +45,7 @@ import javax.swing.JTextArea;
 import javax.swing.text.JTextComponent;
 
 
-public class clientFrame extends JFrame
+public class ClientFrame extends JFrame
 {
     private JScrollPane outputScrollPane;
     private JScrollPane inputScrollPane;
@@ -58,7 +58,7 @@ public class clientFrame extends JFrame
     public ConnectionClient connectChat;
     public ConnectionServer chat;
 
-    public clientFrame()
+    public ClientFrame()
     {
         Runtime.getRuntime().addShutdownHook(new Thread(){public void run(){
         try
@@ -115,7 +115,7 @@ public class clientFrame extends JFrame
             try {
                 connectChat.messageToServer(outMessage);//send string to method in clientconnect that writes to outstream
             } catch (IOException ex) {
-                Logger.getLogger(clientFrame.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ClientFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             addTextToWindow(outMessage);

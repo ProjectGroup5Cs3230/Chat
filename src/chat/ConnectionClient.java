@@ -17,11 +17,11 @@ public class ConnectionClient implements Runnable
 {
 
     protected Socket serverConnection;
-    public clientFrame cFrame;
+    public ClientFrame cFrame;
     public DataOutputStream output;
     public DataInputStream input;
 
-    public ConnectionClient(clientFrame clientFrame)
+    public ConnectionClient(ClientFrame clientFrame)
     {
 
         //server contruct
