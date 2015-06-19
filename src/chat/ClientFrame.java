@@ -35,16 +35,16 @@ public class ClientFrame extends JFrame {
     }
 
     private void sendMessage() {
-        outMessage = "client: " + (chatInput.getText());
+        outMessage = (chatInput.getText());
 
-        try {
-            connectChat.messageToServer(outMessage);//send string to method in clientconnect that writes to outstream
-        }
-        catch (IOException ex) {
-            Logger.getLogger(ClientFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+            try {
+                connectChat.messageToServer(outMessage);//send string to method in clientconnect that writes to outstream
+            } catch (IOException ex) {
+                Logger.getLogger(ClientFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        outMessage = "Client:"+outMessage;
         addTextToWindow(outMessage);
+
         chatInput.setText("");
     }
 

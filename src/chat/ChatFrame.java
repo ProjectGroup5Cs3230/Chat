@@ -36,17 +36,18 @@ public class ChatFrame extends JFrame {
     }
 
     private void sendMessage() {
-        outMessage = "server: " + (chatInput.getText());
-
-        try {
-            connectChat.messageToClient(outMessage);//send to server method to write to outstream
-        }
-        catch (IOException ex) {
-            Logger.getLogger(ChatFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+        outMessage = (chatInput.getText());
+            
+            try 
+            {
+                connectChat.messageToClient(outMessage);//send to server method to write to outstream
+                
+            } catch (IOException ex) {
+                Logger.getLogger(ChatFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        outMessage = "Server:"+outMessage;
         addTextToWindow(outMessage);
-        chatInput.setText("");
+        chatInput.setText("");        
     }
 
     private void startChat() {

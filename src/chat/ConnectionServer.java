@@ -40,14 +40,14 @@ public class ConnectionServer implements Runnable {
                         String chatMessage = input.readUTF(); //read incoming message from client outUTF
                         //System.out.println("ConnectionServer");
                         //System.out.println(chatMessage);
-                        String[] parts = chatMessage.split(":");
-
-                        if (parts[1].equals("exit")) {
+                        
+                        if (chatMessage.equals("exit")) {
                             endConnection();
                             clientConnection.close();
                             break;
                         }
                         else {
+                            chatMessage = "Client:"+chatMessage;
                             sFrame.addTextToWindow(chatMessage);//send to method in server frame to append to output
                         }
                     }
