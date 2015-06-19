@@ -35,7 +35,7 @@ public class ClientFrame extends JFrame {
     }
 
     private void sendMessage() {
-        outMessage = "client:" + (chatInput.getText());
+        outMessage = "client: " + (chatInput.getText());
 
         try {
             connectChat.messageToServer(outMessage);//send string to method in clientconnect that writes to outstream
@@ -107,7 +107,7 @@ public class ClientFrame extends JFrame {
             }
         });
 
-        connectButton = new JButton("ClientConnect");
+        connectButton = new JButton("Client Connect");
         connectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

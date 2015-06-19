@@ -36,7 +36,7 @@ public class ChatFrame extends JFrame {
     }
 
     private void sendMessage() {
-        outMessage = "server:" + (chatInput.getText());
+        outMessage = "server: " + (chatInput.getText());
 
         try {
             connectChat.messageToClient(outMessage);//send to server method to write to outstream
@@ -109,7 +109,7 @@ public class ChatFrame extends JFrame {
             }
         });
 
-        connectButton = new JButton("ServerConnect");
+        connectButton = new JButton("Server Connect");
         connectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
