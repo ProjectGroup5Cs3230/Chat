@@ -39,10 +39,7 @@ public class ChatFrame extends JFrame
         outMessage = "server:" + (chatInput.getText());
 
         try {
-
             connectChat.messageToClient(outMessage);//send to server method to write to outstream
-
-
         } catch (IOException ex) {
             Logger.getLogger(ChatFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -60,22 +57,18 @@ public class ChatFrame extends JFrame
             startup.start();
             chatOutput.append("starting localhost\n");
 
-
-
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public ChatFrame()
-    {
+    public ChatFrame() {
         Runtime.getRuntime().addShutdownHook(new Thread(){public void run(){
-        try
-        {
+        try {
             connectChat.endConnection();
         }
-        catch(Exception e)
-        {
+        catch(Exception e) {
 
         }
         }});
@@ -107,6 +100,8 @@ public class ChatFrame extends JFrame
             }
             if(event.getKeyCode() == KeyEvent.VK_ENTER)
             {
+              // It already adds newline when pressed.  Left here in case
+              // additional functionality required.
             }
         }
         });

@@ -10,27 +10,21 @@ import java.util.logging.Logger;
 
 public class ConnectionClient implements Runnable
 {
-
     protected Socket serverConnection;
-    public ClientFrame cFrame;
     public DataOutputStream output;
     public DataInputStream input;
+    public ClientFrame cFrame;
 
     public ConnectionClient(ClientFrame clientFrame)
     {
         //server contruct
-    	cFrame = clientFrame;
+        cFrame = clientFrame;
     }
-
-
-
     @Override
     public void run()
     {
-
         try
         {
-
             serverConnection = new Socket("localhost",8989);
 
 
@@ -45,13 +39,13 @@ public class ConnectionClient implements Runnable
                 {
 
                     String incomingMessage = input.readUTF();//read message from server
-                    //System.out.println("ConnectionClient");
+                   //System.out.println("ConnectionClient");
                     //System.out.println(incomingMessage);
                     String[] parts = incomingMessage.split(":");
-                    
+
                     if (parts[1].equals("exit"))
                     {
-			endConnection();
+                        endConnection();
                         serverConnection.close();
                         break;
                     }
@@ -91,7 +85,6 @@ public class ConnectionClient implements Runnable
 
         }catch(Exception e)
         {
-
         }
     }
     public void messageToServer(String message) throws IOException
@@ -100,7 +93,6 @@ public class ConnectionClient implements Runnable
         {
             output.writeUTF(message);//send message out to server
             output.flush();
-
         }
         catch(IOException e)
         {

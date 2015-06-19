@@ -19,7 +19,7 @@ public class ConnectionServer implements Runnable
     public ConnectionServer(ChatFrame serverFrame)
     {
         //server construct
-    	sFrame = serverFrame;
+        sFrame = serverFrame;
     }
     @Override
     public void run()
@@ -46,7 +46,7 @@ public class ConnectionServer implements Runnable
                         //System.out.println("ConnectionServer");
                         //System.out.println(chatMessage);
                         String[] parts = chatMessage.split(":");
-						
+
                         if (parts[1].equals("exit"))
                         {
                             endConnection();
@@ -84,23 +84,19 @@ public class ConnectionServer implements Runnable
 
         }catch(Exception e)
         {
-
         }
     }
     public void messageToClient(String message) throws IOException
     {
         try
         {
-
             output.writeUTF(message);//send message out to client
             output.flush();
-
         }
         catch(IOException e)
         {
             throw e;
         }
-
     }
 
 }

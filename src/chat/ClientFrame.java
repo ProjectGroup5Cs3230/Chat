@@ -8,7 +8,6 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -30,13 +29,11 @@ public class ClientFrame extends JFrame
     //private String user;
     private String outMessage = "";
     public ConnectionClient connectChat;
-    public ConnectionServer chat;
 
     private void moveCursorToEnd(JTextComponent textComponent)
     {
         textComponent.setCaretPosition(textComponent.getDocument().getLength());
     }
-
 
     private void sendMessage() {
         outMessage = "client:" + (chatInput.getText());
@@ -48,36 +45,30 @@ public class ClientFrame extends JFrame
         }
 
         addTextToWindow(outMessage);
-
         chatInput.setText("");
     }
 
     private void startChat()
     {
 
-        try
-        {
+        try {
             connectChat = new ConnectionClient(this);
             Thread startup = new Thread(connectChat);
             startup.start();
             chatOutput.append("connected to localhost\n");
 
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public ClientFrame()
-    {
+    public ClientFrame() {
         Runtime.getRuntime().addShutdownHook(new Thread(){public void run(){
-        try
-        {
+        try {
             connectChat.endConnection();
         }
-        catch(Exception e)
-        {
+        catch(Exception e) {
 
         }
         }});
@@ -109,7 +100,8 @@ public class ClientFrame extends JFrame
             }
             if(event.getKeyCode() == KeyEvent.VK_ENTER)
             {
-
+              // It already adds newline when pressed.  Left here in case
+              // additional functionality required.
             }
         }
         });
@@ -129,7 +121,7 @@ public class ClientFrame extends JFrame
          public void actionPerformed(ActionEvent e)
          {
 
-             startChat();
+             startChat();//start thread
          }
         });
         panel.add(outputScrollPane);
