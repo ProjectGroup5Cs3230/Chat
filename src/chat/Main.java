@@ -4,8 +4,8 @@ public class Main {
     public static void main(String[] args)
     {
         @SuppressWarnings("unused")
-		ChatFrame chat = new ChatFrame();
+        ChatFrame chat = new ChatFrame();
         @SuppressWarnings("unused")
-		ClientFrame client = new ClientFrame();
+        ClientFrame client = new ClientFrame();
     }
 }

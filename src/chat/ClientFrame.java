@@ -17,8 +17,8 @@ import javax.swing.JTextArea;
 import javax.swing.text.JTextComponent;
 
 
-public class ClientFrame extends JFrame
-{
+public class ClientFrame extends JFrame {
+
     private static final long serialVersionUID = 574163885414434105L;
     private JScrollPane outputScrollPane;
     private JScrollPane inputScrollPane;
@@ -30,8 +30,7 @@ public class ClientFrame extends JFrame
     private String outMessage = "";
     public ConnectionClient connectChat;
 
-    private void moveCursorToEnd(JTextComponent textComponent)
-    {
+    private void moveCursorToEnd(JTextComponent textComponent) {
         textComponent.setCaretPosition(textComponent.getDocument().getLength());
     }
 
@@ -40,7 +39,8 @@ public class ClientFrame extends JFrame
 
         try {
             connectChat.messageToServer(outMessage);//send string to method in clientconnect that writes to outstream
-        } catch (IOException ex) {
+        }
+        catch (IOException ex) {
             Logger.getLogger(ClientFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -48,15 +48,12 @@ public class ClientFrame extends JFrame
         chatInput.setText("");
     }
 
-    private void startChat()
-    {
-
+    private void startChat() {
         try {
             connectChat = new ConnectionClient(this);
             Thread startup = new Thread(connectChat);
             startup.start();
             chatOutput.append("connected to localhost\n");
-
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -65,12 +62,11 @@ public class ClientFrame extends JFrame
 
     public ClientFrame() {
         Runtime.getRuntime().addShutdownHook(new Thread(){public void run(){
-        try {
-            connectChat.endConnection();
-        }
-        catch(Exception e) {
-
-        }
+            try {
+                connectChat.endConnection();
+            }
+            catch(Exception e) {
+            }
         }});
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -90,40 +86,35 @@ public class ClientFrame extends JFrame
         inputScrollPane = new JScrollPane(chatInput);
         inputScrollPane.setPreferredSize(new Dimension(300, 50));
 
-
         chatInput.addKeyListener(new KeyAdapter() {
-        @Override
-        public void keyPressed(KeyEvent event) {
-            if(event.getKeyCode() == KeyEvent.VK_ENTER && event.getModifiers() == KeyEvent.CTRL_MASK)
-            {
-                sendMessage();
+            @Override
+            public void keyPressed(KeyEvent event) {
+                if(event.getKeyCode() == KeyEvent.VK_ENTER && event.getModifiers() == KeyEvent.CTRL_MASK) {
+                    sendMessage();
+                }
+                if(event.getKeyCode() == KeyEvent.VK_ENTER) {
+                    // It already adds newline when pressed.  Left here in case
+                    // additional functionality required.
+                }
             }
-            if(event.getKeyCode() == KeyEvent.VK_ENTER)
-            {
-              // It already adds newline when pressed.  Left here in case
-              // additional functionality required.
-            }
-        }
         });
 
         sendButton = new JButton("Send");
         sendButton.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent event)
-        {
-            sendMessage();
-        }
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                sendMessage();
+            }
         });
+
         connectButton = new JButton("ClientConnect");
         connectButton.addActionListener(new ActionListener() {
-
-         @Override
-         public void actionPerformed(ActionEvent e)
-         {
-
-             startChat();//start thread
-         }
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                startChat();//start thread
+            }
         });
+
         panel.add(outputScrollPane);
         panel.add(inputScrollPane);
         panel.add(sendButton);
@@ -135,8 +126,7 @@ public class ClientFrame extends JFrame
         chatInput.requestFocus();
     }
 
-    public void addTextToWindow(String text)
-    {
+    public void addTextToWindow(String text) {
         chatOutput.append(text + "\n");
         moveCursorToEnd(chatOutput);
         chatInput.setText("");
