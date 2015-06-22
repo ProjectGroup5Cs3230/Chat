@@ -26,7 +26,7 @@ public class ChatFrame extends JFrame {
     private JTextArea chatInput;
     private JButton sendButton;
     private JButton connectButton;
-    //private String user;
+    private final static Logger LOGGER = Logger.getLogger(ChatFrame.class.getName());
     private String outMessage = "";
     public ConnectionServer connectChat;
 
@@ -43,7 +43,7 @@ public class ChatFrame extends JFrame {
                 connectChat.messageToClient(outMessage);//send to server method to write to outstream
                 
             } catch (IOException ex) {
-                Logger.getLogger(ChatFrame.class.getName()).log(Level.SEVERE, null, ex);
+                LOGGER.log(Level.SEVERE, "Unable to process message from server to client");
             }
         outMessage = "Server:"+outMessage;
         addTextToWindow(outMessage);
@@ -67,7 +67,9 @@ public class ChatFrame extends JFrame {
             try {
                 connectChat.endConnection();
             }
-            catch(Exception e) {
+            catch(Exception e)
+            {
+                //does nothing
             }
         }});
 
