@@ -41,19 +41,19 @@ public class ChatFrame extends JFrame {
             try 
             {
                 connectChat.messageToClient(outMessage);//send to server method to write to outstream
-                outMessage = "Server:"+outMessage;
+                outMessage = "Server: "+outMessage;
                 addTextToWindow(outMessage);
                 
             } catch (IOException ex) {
                 LOGGER.log(Level.SEVERE, "Unable to process message from server to client");
-                outMessage = "Server:"+outMessage;
+                outMessage = "Server: "+outMessage;
                 addTextToWindow(outMessage);
                 chatOutput.append("Failed to send message.\n");
             }
             catch (NullPointerException npe)
             {
                 LOGGER.log(Level.SEVERE, "Unable to process message from server to client");
-                outMessage = "Server:"+outMessage;
+                outMessage = "Server: "+outMessage;
                 addTextToWindow(outMessage);
                 chatOutput.append("Failed to send message.\n");
             }
