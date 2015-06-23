@@ -39,11 +39,24 @@ public class ClientFrame extends JFrame {
 
             try {
                 connectChat.messageToServer(outMessage);//send string to method in clientconnect that writes to outstream
-            } catch (IOException ex) {
-                Logger.getLogger(ClientFrame.class.getName()).log(Level.SEVERE, null, ex);
+                outMessage = "Client: "+outMessage;
+                addTextToWindow(outMessage);
             }
-        outMessage = "Client:"+outMessage;
-        addTextToWindow(outMessage);
+            catch (IOException ex) {
+                Logger.getLogger(ClientFrame.class.getName()).log(Level.SEVERE, null, ex);
+                outMessage = "Client: "+outMessage;
+                addTextToWindow(outMessage);
+                chatOutput.append("Failed to send message.\n");
+
+            }
+            catch (NullPointerException npe)
+            {
+                Logger.getLogger(ClientFrame.class.getName()).log(Level.SEVERE, null, npe);
+                outMessage = "Client: "+outMessage;
+                addTextToWindow(outMessage);
+                chatOutput.append("Failed to send message.\n");
+            }
+
 
         chatInput.setText("");
     }
@@ -57,6 +70,8 @@ public class ClientFrame extends JFrame {
         }
         catch (Exception e) {
             e.printStackTrace();
+            Logger.getLogger(ClientFrame.class.getName()).log(Level.SEVERE, null, e);
+            chatOutput.append("Could not connect to local host.");
         }
     }
 
@@ -65,7 +80,9 @@ public class ClientFrame extends JFrame {
             try {
                 connectChat.endConnection();
             }
-            catch(Exception e) {
+            catch(Exception e)
+            {
+                Logger.getLogger(ClientFrame.class.getName()).log(Level.SEVERE, null, e);
             }
         }});
 

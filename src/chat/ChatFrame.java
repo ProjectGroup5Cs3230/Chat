@@ -41,12 +41,23 @@ public class ChatFrame extends JFrame {
             try 
             {
                 connectChat.messageToClient(outMessage);//send to server method to write to outstream
+                outMessage = "Server:"+outMessage;
+                addTextToWindow(outMessage);
                 
             } catch (IOException ex) {
                 LOGGER.log(Level.SEVERE, "Unable to process message from server to client");
+                outMessage = "Server:"+outMessage;
+                addTextToWindow(outMessage);
+                chatOutput.append("Failed to send message.\n");
             }
-        outMessage = "Server:"+outMessage;
-        addTextToWindow(outMessage);
+            catch (NullPointerException npe)
+            {
+                LOGGER.log(Level.SEVERE, "Unable to process message from server to client");
+                outMessage = "Server:"+outMessage;
+                addTextToWindow(outMessage);
+                chatOutput.append("Failed to send message.\n");
+            }
+
         chatInput.setText("");        
     }
 
@@ -59,6 +70,8 @@ public class ChatFrame extends JFrame {
         }
         catch (Exception e) {
             e.printStackTrace();
+            Logger.getLogger(ClientFrame.class.getName()).log(Level.SEVERE, null, e);
+            chatOutput.append("Failed to start local host.");
         }
     }
 
@@ -69,7 +82,6 @@ public class ChatFrame extends JFrame {
             }
             catch(Exception e)
             {
-                //does nothing
             }
         }});
 
