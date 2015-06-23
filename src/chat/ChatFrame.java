@@ -28,7 +28,7 @@ public class ChatFrame extends JFrame {
     private JButton connectButton;
     private final static Logger LOGGER = Logger.getLogger(ChatFrame.class.getName());
     private String outMessage = "";
-    public ConnectionServer connectChat;
+    private ConnectionServer connectChat;
 
 
     private void moveCursorToEnd(JTextComponent textComponent) {

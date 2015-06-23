@@ -10,11 +10,11 @@ import java.net.Socket;
 
 public class ConnectionServer implements Runnable {
 
-    public ServerSocket server;
-    public BufferedWriter serverMessage;
-    public DataOutputStream output;
-    public DataInputStream input;
-    public ChatFrame sFrame;
+    private ServerSocket server;
+    private BufferedWriter serverMessage;
+    private DataOutputStream output;
+    private DataInputStream input;
+    private ChatFrame sFrame;
 
     public ConnectionServer(ChatFrame serverFrame) {
         //server construct

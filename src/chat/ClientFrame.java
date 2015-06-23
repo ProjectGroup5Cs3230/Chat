@@ -28,7 +28,7 @@ public class ClientFrame extends JFrame {
     private JButton connectButton;
     //private String user;
     private String outMessage = "";
-    public ConnectionClient connectChat;
+    private ConnectionClient connectChat;
 
     private void moveCursorToEnd(JTextComponent textComponent) {
         textComponent.setCaretPosition(textComponent.getDocument().getLength());

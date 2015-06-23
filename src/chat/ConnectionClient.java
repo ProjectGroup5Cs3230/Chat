@@ -10,10 +10,10 @@ import java.util.logging.Logger;
 
 public class ConnectionClient implements Runnable {
 
-    protected Socket serverConnection;
-    public DataOutputStream output;
-    public DataInputStream input;
-    public ClientFrame cFrame;
+    private Socket serverConnection;
+    private DataOutputStream output;
+    private DataInputStream input;
+    private ClientFrame cFrame;
     private final static Logger LOGGER = Logger.getLogger(ConnectionClient.class.getName());
 
     public ConnectionClient(ClientFrame clientFrame) {
