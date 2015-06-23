@@ -78,8 +78,7 @@ public class ChatFrame extends JFrame {
             try {
                 connectChat.endConnection();
             }
-            catch(Exception e)
-            {
+            catch(Exception e) {
             }
         }});
 

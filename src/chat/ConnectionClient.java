@@ -28,13 +28,12 @@ public class ConnectionClient implements Runnable {
 
             this.input = new DataInputStream(serverConnection.getInputStream());
             this.output = new DataOutputStream(serverConnection.getOutputStream());
-            
+
             while(serverConnection.isConnected() && !serverConnection.isClosed()) {
                 try {
                     String incomingMessage = input.readUTF();//read message from server
-                    
-                    if (incomingMessage.equals("exit")) 
-                    {
+
+                    if (incomingMessage.equals("exit")) {
                         endConnection();
                         serverConnection.close();
                         break;
@@ -44,51 +43,44 @@ public class ConnectionClient implements Runnable {
                         cFrame.addTextToWindow(incomingMessage);//send to method in client frame to append to chatoutput
                     }
                 }
-                catch(NullPointerException e)
-                {
-                    
+                catch(NullPointerException e) {
+
                 }
             }
         }
-        catch (NullPointerException e) 
-        {
+        catch (NullPointerException e) {
 
         }
-        catch (IOException ex) 
-        {
+        catch (IOException ex) {
             LOGGER.log(Level.SEVERE, "Unable to connect to server",ex);
         }
 
     }
 
-    public void endConnection()
-    {
-        try
-        {
+    public void endConnection() {
+        try {
             this.input.close();
-            
-            
-        }catch(Exception e)
-        {
+
+
+        }
+        catch(Exception e) {
             LOGGER.log(Level.SEVERE, "Unable to close input stream",e);
         }
-        try
-        {
+        try {
             this.serverConnection.close();
-            
-        }catch(Exception e)
-        {
+
+        }
+        catch(Exception e) {
             LOGGER.log(Level.SEVERE, "Unable to disconnect from server",e);
         }
     }
-    
+
     public void messageToServer(String message) throws IOException {
         try {
             output.writeUTF(message);//send message out to server
             output.flush();
         }
-        catch(IOException e) 
-        {
+        catch(IOException e) {
             throw e;
         }
     }

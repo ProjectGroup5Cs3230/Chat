@@ -38,7 +38,7 @@ public class ConnectionServer implements Runnable {
                         String chatMessage = input.readUTF(); //read incoming message from client outUTF
                         //System.out.println("ConnectionServer");
                         //System.out.println(chatMessage);
-                        
+
                         if (chatMessage.equals("exit")) {
                             endConnection();
                             clientConnection.close();
@@ -61,8 +61,7 @@ public class ConnectionServer implements Runnable {
         }
     }
 
-    public void endConnection()
-    {
+    public void endConnection() {
         try {
             input.close();
             server.close();
