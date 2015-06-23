@@ -26,7 +26,6 @@ public class ClientFrame extends JFrame {
     private JTextArea chatInput;
     private JButton sendButton;
     private JButton connectButton;
-    //private String user;
     private String outMessage = "";
     private ConnectionClient connectChat;
 
@@ -56,7 +55,6 @@ public class ClientFrame extends JFrame {
                 addTextToWindow(outMessage);
                 chatOutput.append("Failed to send message.\n");
             }
-
 
         chatInput.setText("");
     }

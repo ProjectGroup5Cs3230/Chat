@@ -30,35 +30,33 @@ public class ChatFrame extends JFrame {
     private String outMessage = "";
     private ConnectionServer connectChat;
 
-
     private void moveCursorToEnd(JTextComponent textComponent) {
         textComponent.setCaretPosition(textComponent.getDocument().getLength());
     }
 
     private void sendMessage() {
         outMessage = (chatInput.getText());
-            
-            try 
-            {
+
+            try {
                 connectChat.messageToClient(outMessage);//send to server method to write to outstream
                 outMessage = "Server: "+outMessage;
                 addTextToWindow(outMessage);
-                
-            } catch (IOException ex) {
+
+            }
+            catch (IOException ex) {
                 LOGGER.log(Level.SEVERE, "Unable to process message from server to client");
                 outMessage = "Server: "+outMessage;
                 addTextToWindow(outMessage);
                 chatOutput.append("Failed to send message.\n");
             }
-            catch (NullPointerException npe)
-            {
+            catch (NullPointerException npe) {
                 LOGGER.log(Level.SEVERE, "Unable to process message from server to client");
                 outMessage = "Server: "+outMessage;
                 addTextToWindow(outMessage);
                 chatOutput.append("Failed to send message.\n");
             }
 
-        chatInput.setText("");        
+        chatInput.setText("");
     }
 
     private void startChat() {
@@ -118,8 +116,7 @@ public class ChatFrame extends JFrame {
         sendButton = new JButton("Send");
         sendButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent event)
-            {
+            public void actionPerformed(ActionEvent event) {
                 sendMessage();
             }
         });

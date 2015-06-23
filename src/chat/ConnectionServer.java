@@ -1,6 +1,5 @@
 package chat;
 
-import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -11,7 +10,6 @@ import java.net.Socket;
 public class ConnectionServer implements Runnable {
 
     private ServerSocket server;
-    private BufferedWriter serverMessage;
     private DataOutputStream output;
     private DataInputStream input;
     private ChatFrame sFrame;
