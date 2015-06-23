@@ -1,11 +1,13 @@
 package chat;
 
+;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -28,29 +30,38 @@ public class ClientFrame extends JFrame {
     private JButton connectButton;
     private String outMessage = "";
     private ConnectionClient connectChat;
-
+    private final static Logger LOGGER = Logger.getLogger(ClientFrame.class.getName());
+    private FileHandler fh;
+    
+    private void log() throws IOException
+    {
+        fh = new FileHandler("myLogFile.log");
+        LOGGER.addHandler(fh);
+    }
+    
     private void moveCursorToEnd(JTextComponent textComponent) {
         textComponent.setCaretPosition(textComponent.getDocument().getLength());
     }
 
-    private void sendMessage() {
+    private void sendMessage(){
+        
         outMessage = (chatInput.getText());
-
+        
             try {
                 connectChat.messageToServer(outMessage);//send string to method in clientconnect that writes to outstream
                 outMessage = "Client: "+outMessage;
                 addTextToWindow(outMessage);
             }
             catch (IOException ex) {
-                Logger.getLogger(ClientFrame.class.getName()).log(Level.SEVERE, null, ex);
+                LOGGER.log(Level.SEVERE, "IO Error in ClientFrame sendMesage",ex);
                 outMessage = "Client: "+outMessage;
                 addTextToWindow(outMessage);
                 chatOutput.append("Failed to send message.\n");
-
+                
             }
             catch (NullPointerException npe)
             {
-                Logger.getLogger(ClientFrame.class.getName()).log(Level.SEVERE, null, npe);
+                LOGGER.log(Level.SEVERE, "NPE in ClientFrame sendMessage",npe);
                 outMessage = "Client: "+outMessage;
                 addTextToWindow(outMessage);
                 chatOutput.append("Failed to send message.\n");
@@ -59,7 +70,8 @@ public class ClientFrame extends JFrame {
         chatInput.setText("");
     }
 
-    private void startChat() {
+    private void startChat(){
+        
         try {
             connectChat = new ConnectionClient(this);
             Thread startup = new Thread(connectChat);
@@ -68,19 +80,20 @@ public class ClientFrame extends JFrame {
         }
         catch (Exception e) {
             e.printStackTrace();
-            Logger.getLogger(ClientFrame.class.getName()).log(Level.SEVERE, null, e);
+            LOGGER.log(Level.SEVERE, "Exception in thread start",e);
             chatOutput.append("Could not connect to local host.");
         }
     }
 
-    public ClientFrame() {
+    public ClientFrame() throws IOException {
+        log();
         Runtime.getRuntime().addShutdownHook(new Thread(){public void run(){
             try {
                 connectChat.endConnection();
             }
             catch(Exception e)
             {
-                Logger.getLogger(ClientFrame.class.getName()).log(Level.SEVERE, null, e);
+                LOGGER.log(Level.SEVERE, "Exception in ClientFrame construct",e);
             }
         }});
 
@@ -105,7 +118,9 @@ public class ClientFrame extends JFrame {
             @Override
             public void keyPressed(KeyEvent event) {
                 if(event.getKeyCode() == KeyEvent.VK_ENTER && event.getModifiers() == KeyEvent.CTRL_MASK) {
-                    sendMessage();
+                    
+                        sendMessage();
+                    
                 }
                 if(event.getKeyCode() == KeyEvent.VK_ENTER) {
                     // It already adds newline when pressed.  Left here in case
@@ -118,7 +133,9 @@ public class ClientFrame extends JFrame {
         sendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                sendMessage();
+                
+                    sendMessage();
+                
             }
         });
 
@@ -126,7 +143,9 @@ public class ClientFrame extends JFrame {
         connectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                startChat();//start thread
+                
+                    startChat();//start thread
+               
             }
         });
 

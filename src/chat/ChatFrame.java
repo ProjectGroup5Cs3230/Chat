@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -29,12 +30,20 @@ public class ChatFrame extends JFrame {
     private final static Logger LOGGER = Logger.getLogger(ChatFrame.class.getName());
     private String outMessage = "";
     private ConnectionServer connectChat;
+    private FileHandler fh;
+    
+    private void log() throws IOException
+    {
+        fh = new FileHandler("myLogFile.log");
+        LOGGER.addHandler(fh);
+    }
 
     private void moveCursorToEnd(JTextComponent textComponent) {
         textComponent.setCaretPosition(textComponent.getDocument().getLength());
     }
 
-    private void sendMessage() {
+    private void sendMessage()  {
+        
         outMessage = (chatInput.getText());
 
             try {
@@ -60,6 +69,7 @@ public class ChatFrame extends JFrame {
     }
 
     private void startChat() {
+       
         try {
             connectChat = new ConnectionServer(this);
             Thread startup = new Thread(connectChat);
@@ -68,17 +78,20 @@ public class ChatFrame extends JFrame {
         }
         catch (Exception e) {
             e.printStackTrace();
-            Logger.getLogger(ClientFrame.class.getName()).log(Level.SEVERE, null, e);
+            LOGGER.log(Level.SEVERE, "Exception in thread start up");
             chatOutput.append("Failed to start local host.");
         }
     }
 
-    public ChatFrame() {
+    public ChatFrame() throws IOException {
+        log();
         Runtime.getRuntime().addShutdownHook(new Thread(){public void run(){
             try {
                 connectChat.endConnection();
             }
-            catch(Exception e) {
+            catch(Exception e) 
+            {
+                LOGGER.log(Level.SEVERE, "Exception in ChatFrame construct",e);
             }
         }});
 
@@ -103,7 +116,9 @@ public class ChatFrame extends JFrame {
             @Override
             public void keyPressed(KeyEvent event) {
                 if(event.getKeyCode() == KeyEvent.VK_ENTER && event.getModifiers() == KeyEvent.CTRL_MASK) {
-                    sendMessage();
+                    
+                        sendMessage();
+                   
                 }
                 if(event.getKeyCode() == KeyEvent.VK_ENTER) {
                     // It already adds newline when pressed.  Left here in case
@@ -116,7 +131,9 @@ public class ChatFrame extends JFrame {
         sendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                sendMessage();
+                
+                    sendMessage();
+                
             }
         });
 
@@ -124,7 +141,9 @@ public class ChatFrame extends JFrame {
         connectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                startChat(); //start thread
+                
+                    startChat(); //start thread
+                
             }
         });
 

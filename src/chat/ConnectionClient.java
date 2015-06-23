@@ -4,8 +4,11 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+
 
 
 public class ConnectionClient implements Runnable {
@@ -15,15 +18,21 @@ public class ConnectionClient implements Runnable {
     private DataInputStream input;
     private ClientFrame cFrame;
     private final static Logger LOGGER = Logger.getLogger(ConnectionClient.class.getName());
-
+    private FileHandler fh;
+    
     public ConnectionClient(ClientFrame clientFrame) {
         //server contruct
         cFrame = clientFrame;
     }
+    
+    
 
     @Override
     public void run() {
         try {
+            FileHandler fileHandler = new FileHandler("myLogFile.log");
+            LOGGER.addHandler(fileHandler);
+            
             serverConnection = new Socket("localhost",8989);
 
             this.input = new DataInputStream(serverConnection.getInputStream());
@@ -44,12 +53,12 @@ public class ConnectionClient implements Runnable {
                     }
                 }
                 catch(NullPointerException e) {
-
+                    LOGGER.log(Level.INFO, "NullPointerException in server connect",e);
                 }
             }
         }
         catch (NullPointerException e) {
-
+            LOGGER.log(Level.INFO, "NullPointerException in server connect",e);
         }
         catch (IOException ex) {
             LOGGER.log(Level.SEVERE, "Unable to connect to server",ex);
