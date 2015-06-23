@@ -14,6 +14,7 @@ public class ConnectionClient implements Runnable {
     public DataOutputStream output;
     public DataInputStream input;
     public ClientFrame cFrame;
+    private final static Logger LOGGER = Logger.getLogger(ConnectionClient.class.getName());
 
     public ConnectionClient(ClientFrame clientFrame) {
         //server contruct
@@ -25,17 +26,15 @@ public class ConnectionClient implements Runnable {
         try {
             serverConnection = new Socket("localhost",8989);
 
-            //input = new BufferedReader (new InputStreamReader(serverConnection.getInputStream()));
-            //clientMessage = new BufferedWriter(new OutputStreamWriter(serverConnection.getOutputStream()));
             this.input = new DataInputStream(serverConnection.getInputStream());
             this.output = new DataOutputStream(serverConnection.getOutputStream());
+            
             while(serverConnection.isConnected() && !serverConnection.isClosed()) {
                 try {
                     String incomingMessage = input.readUTF();//read message from server
-                    //System.out.println("ConnectionClient");
-                    //System.out.println(incomingMessage);
-                  
-                    if (incomingMessage.equals("exit")) {
+                    
+                    if (incomingMessage.equals("exit")) 
+                    {
                         endConnection();
                         serverConnection.close();
                         break;
@@ -45,35 +44,51 @@ public class ConnectionClient implements Runnable {
                         cFrame.addTextToWindow(incomingMessage);//send to method in client frame to append to chatoutput
                     }
                 }
-                catch(NullPointerException e) {
+                catch(NullPointerException e)
+                {
+                    
                 }
             }
         }
-        catch (NullPointerException e) {
+        catch (NullPointerException e) 
+        {
 
         }
-        catch (IOException ex) {
-            Logger.getLogger(ConnectionClient.class.getName()).log(Level.SEVERE, null, ex);
+        catch (IOException ex) 
+        {
+            LOGGER.log(Level.SEVERE, "Unable to connect to server",ex);
         }
 
     }
 
-    public void endConnection() {
-        try {
+    public void endConnection()
+    {
+        try
+        {
             this.input.close();
-            this.serverConnection.close();
-
+            
+            
+        }catch(Exception e)
+        {
+            LOGGER.log(Level.SEVERE, "Unable to close input stream",e);
         }
-        catch(Exception e) {
+        try
+        {
+            this.serverConnection.close();
+            
+        }catch(Exception e)
+        {
+            LOGGER.log(Level.SEVERE, "Unable to disconnect from server",e);
         }
     }
-
+    
     public void messageToServer(String message) throws IOException {
         try {
             output.writeUTF(message);//send message out to server
             output.flush();
         }
-        catch(IOException e) {
+        catch(IOException e) 
+        {
             throw e;
         }
     }
