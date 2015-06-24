@@ -88,6 +88,7 @@ public class ConnectionServer implements Runnable {
             output.flush();
         }
         catch(IOException e) {
+            LOGGER.log(Level.SEVERE, "Unable to send message to client");
             throw e;
         }
     }
