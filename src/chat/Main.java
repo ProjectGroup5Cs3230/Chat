@@ -6,7 +6,7 @@ public class Main {
     public static void main(String[] args) throws IOException
     {
         @SuppressWarnings("unused")
-        ChatFrame chat = new ChatFrame();
+        ServerFrame chat = new ServerFrame();
         @SuppressWarnings("unused")
         ClientFrame client = new ClientFrame();
     }

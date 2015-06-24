@@ -15,9 +15,9 @@ public class ConnectionServer implements Runnable {
     private ServerSocket server;
     private DataOutputStream output;
     private DataInputStream input;
-    private ChatFrame sFrame;
+    private ServerFrame sFrame;
     private final static Logger LOGGER = Logger.getLogger(ConnectionServer.class.getName());
-    public ConnectionServer(ChatFrame serverFrame) {
+    public ConnectionServer(ServerFrame serverFrame) {
         //server construct
         sFrame = serverFrame;
     }
@@ -27,7 +27,7 @@ public class ConnectionServer implements Runnable {
         try {
             FileHandler fileHandler = new FileHandler("myLogFile.log");
             LOGGER.addHandler(fileHandler);
-            
+
             server = new ServerSocket(8989);
 
             while(true) {
@@ -42,7 +42,7 @@ public class ConnectionServer implements Runnable {
 
                     try {
                         String chatMessage = input.readUTF(); //read incoming message from client outUTF
-                        
+
                         if (chatMessage.equals("exit")) {
                             endConnection();
                             clientConnection.close();
