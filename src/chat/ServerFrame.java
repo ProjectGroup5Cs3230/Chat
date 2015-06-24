@@ -68,5 +68,12 @@ public class ServerFrame extends ChatFrame {
 
         this.setupFrame("Server Connect");
     }
+    public void log() throws IOException
+    {
+        FileHandler fileHandler = new FileHandler("myLogFile.log");
+        LOGGER.addHandler(fileHandler);
+    
+    
+    }
 
 }
