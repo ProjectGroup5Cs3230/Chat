@@ -90,6 +90,7 @@ public class ConnectionClient implements Runnable {
             output.flush();
         }
         catch(IOException e) {
+            LOGGER.log(Level.SEVERE, "Unable to send client message");
             throw e;
         }
     }
