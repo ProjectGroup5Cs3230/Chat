@@ -72,5 +72,4 @@ public class ClientFrame extends ChatFrame {
 
         this.setupFrame("Client Connect");
     }
-
 }

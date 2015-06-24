@@ -18,21 +18,20 @@ public class ConnectionClient implements Runnable {
     private DataInputStream input;
     private ClientFrame cFrame;
     private final static Logger LOGGER = Logger.getLogger(ConnectionClient.class.getName());
-    private FileHandler fh;
-    
+
     public ConnectionClient(ClientFrame clientFrame) {
         //server contruct
         cFrame = clientFrame;
     }
-    
-    
+
+
 
     @Override
     public void run() {
         try {
             FileHandler fileHandler = new FileHandler("myLogFile.log");
             LOGGER.addHandler(fileHandler);
-            
+
             serverConnection = new Socket("localhost",8989);
 
             this.input = new DataInputStream(serverConnection.getInputStream());

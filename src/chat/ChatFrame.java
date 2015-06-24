@@ -16,8 +16,8 @@ import javax.swing.text.JTextComponent;
 
 abstract public class ChatFrame extends JFrame {
 
-	private static final long serialVersionUID = -4234270203676660298L;
-	private JScrollPane outputScrollPane;
+    private static final long serialVersionUID = -4234270203676660298L;
+    private JScrollPane outputScrollPane;
     private JScrollPane inputScrollPane;
     protected JTextArea chatOutput;
     protected JTextArea chatInput;

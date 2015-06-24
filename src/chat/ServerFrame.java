@@ -13,6 +13,11 @@ public class ServerFrame extends ChatFrame {
     protected Logger LOGGER = Logger.getLogger(ServerFrame.class.getName());
     private FileHandler fh;
 
+    private void log() throws IOException {
+        fh = new FileHandler("myLogFile.log");
+        LOGGER.addHandler(fh);
+    }
+
     @Override
     final protected void sendMessage() {
 
@@ -41,7 +46,6 @@ public class ServerFrame extends ChatFrame {
 
     @Override
     final protected void startChat() {
-
         try {
             connectChat = new ConnectionServer(this);
             Thread startup = new Thread(connectChat);
@@ -68,12 +72,4 @@ public class ServerFrame extends ChatFrame {
 
         this.setupFrame("Server Connect");
     }
-    public void log() throws IOException
-    {
-        FileHandler fileHandler = new FileHandler("myLogFile.log");
-        LOGGER.addHandler(fileHandler);
-    
-    
-    }
-
 }
