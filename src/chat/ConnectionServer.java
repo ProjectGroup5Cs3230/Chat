@@ -49,7 +49,7 @@ public class ConnectionServer implements Runnable {
                             break;
                         }
                         else {
-                            chatMessage = "Client:"+chatMessage;
+                            chatMessage = "Client: "+chatMessage;
                             sFrame.addTextToWindow(chatMessage);//send to method in server frame to append to output
                         }
                     }

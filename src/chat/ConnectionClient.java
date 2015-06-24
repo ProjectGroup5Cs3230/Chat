@@ -48,7 +48,7 @@ public class ConnectionClient implements Runnable {
                         break;
                     }
                     else {
-                        incomingMessage = "Server:"+incomingMessage;
+                        incomingMessage = "Server: "+incomingMessage;
                         cFrame.addTextToWindow(incomingMessage);//send to method in client frame to append to chatoutput
                     }
                 }
